@@ -1,0 +1,80 @@
+CREATE TABLE Worker (
+WORKER_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+FIRST_NAME CHAR(25),
+LAST_NAME CHAR(25),
+SALARY INT(15),
+JOINING_DATE DATETIME,
+DEPARTMENT CHAR(25)
+);
+
+INSERT INTO Worker 
+(WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+(001, 'Monika', 'Arora', 100000, '14-02-20 09.00.00', 'HR'),
+(002, 'Niharika', 'Verma', 80000, '14-06-11 09.00.00', 'Admin'),
+(003, 'Vishal', 'Singhal', 300000, '14-02-20 09.00.00', 'HR'),
+(004, 'Amitabh', 'Singh', 500000, '14-02-20 09.00.00', 'Admin'),
+(005, 'Vivek', 'Bhati', 500000, '14-06-11 09.00.00', 'Admin'),
+(006, 'Vipul', 'Diwan', 200000, '14-06-11 09.00.00', 'Account'),
+(007, 'Satish', 'Kumar', 75000, '14-01-20 09.00.00', 'Account'),
+(008, 'Geetika', 'Chauhan', 90000, '14-04-11 09.00.00', 'Admin');
+
+
+CREATE TABLE Bonus (
+WORKER_REF_ID INT,
+BONUS_AMOUNT INT(10),
+BONUS_DATE DATETIME,
+FOREIGN KEY (WORKER_REF_ID)
+REFERENCES Worker(WORKER_ID)
+ ON DELETE CASCADE
+);
+
+INSERT INTO Bonus 
+(WORKER_REF_ID, BONUS_AMOUNT, BONUS_DATE) VALUES
+(001, 5000, '16-02-20'),
+(002, 3000, '16-06-11'),
+(003, 4000, '16-02-20'),
+(001, 4500, '16-02-20'),
+(002, 3500, '16-06-11');
+
+
+CREATE TABLE Title (
+WORKER_REF_ID INT,
+WORKER_TITLE CHAR(25),
+AFFECTED_FROM DATETIME,
+FOREIGN KEY (WORKER_REF_ID)
+REFERENCES Worker(WORKER_ID)
+ ON DELETE CASCADE
+);
+
+
+INSERT INTO Title 
+(WORKER_REF_ID, WORKER_TITLE, AFFECTED_FROM) VALUES
+(001, 'Manager', '2016-02-20 00:00:00'),
+(002, 'Executive', '2016-06-11 00:00:00'),
+(008, 'Executive', '2016-06-11 00:00:00'),
+(005, 'Manager', '2016-06-11 00:00:00'),
+(004, 'Asst. Manager', '2016-06-11 00:00:00'),
+(007, 'Executive', '2016-06-11 00:00:00'),
+(006, 'Lead', '2016-06-11 00:00:00'),
+(003, 'Lead', '2016-06-11 00:00:00');
+Questions:
+	1. Provide department wise employee count under each title
+	Output should be in below format:
+Department	Manager	Executive	Asst. Manager	Lead
+HR	1	0	0	1
+Admin				
+Account				
+
+	2. List all the workers (worker_id, first_name, last_name, worker_title, salary, department) with salary higher than department's Average salary
+	3. Identify Managers with Earnings Less Than Department Average Earnings (Salary+Bonus) 
+	4. Find out which worker got the highest bonus. Display their work title as well.
+	5. Identify employees who received a promotion, and a salary increase within the same year.
+	6. Calculate the percentage salary increase for each promotion.
+The company wants to analyse how bonuses are distributed across different departments. They need to:
+	7. Rank employees by their total bonus amount within each department.
+	8. Identify the difference between each employee’s bonus and the highest bonus in their department.
+	9. Calculate the cumulative bonus for each department, ordered by bonus date.
+HR wants to evaluate the career progression of employees based on their title changes. For each employee:
+	10. Identify the number of promotions employees have received over their career.
+	11. Calculate the average time spent in each role (time between promotions).
+12. Identify employees who have spent more time in their current role compared to their previous role.
